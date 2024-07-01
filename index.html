@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    
+
+<!-- Estructura del carro -->
+<header id="header" class="header">
+    <div class="container">
+        <div class="row">
+            <div class="four columns">
+                <img src="img/logo.jpg" id="logo">
+            </div>
+            <div class="two columns u-pull-right">
+                <ul>
+                    <li class="submenu">
+                        <img src="img/cart.png" id="img-carrito">
+                            <!--- Datos del carro-->
+                        <div id="carrito">
+                                <!-- Contenido del carrito -->    
+                            <table id="lista-carrito" class="u-full-width">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                    <tbody></tbody>
+                            </table>
+                                    <!--- Boton que acciona Vaciar lista-carrito en JS -->
+                            <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div>
+</header>
+
+
+
+    <!--Barra que separa la parte fija del carro de arriba-->
+    <div class="barra">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+
+
+    <br><br><br><br>
+
+
+
+    <!--Titulo Estático:-->
+    <h1 id="encabezado" class="encabezado">Productos disponibles</h1>
+
+    <!--Productos dinamicos en estructura de cajas
+    Cargados en lista-productos-->
+    <div id="lista-productos" class="container">
+
+    <script src="js/app.js"></script>
+
+
+     
+
+</body>
+</html>
