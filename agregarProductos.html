@@ -1,39 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Tutorial FRONT-BACK</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
-    <h1>Armar un objeto ingresando texto por formularios</h1>
 
-    //Acá armo un formulario para luego armar un objeto con los datos ingresados por el usuario:
-    <form id="productoForm">
-        <!-- Tus campos de entrada aquí -->
-        <input type="text" id="CodigoProducto" placeholder="Código del producto"><br>
-        <input type="text" id="tipo" placeholder="Tipo de producto"><br>
-        <input type="text" id="modelo" placeholder="Modelo del producto"><br>
-        <input type="text" id="color" placeholder="Color del producto"><br>
-        <input type="number" id="valor_u" placeholder="Valor unitario del producto"><br>
-        <input type="number" id="cantidad" placeholder="Cantidad del producto"><br>
-        <input type="text" id="urlImagenProducto" placeholder="URL imagen producto"><br>
-        <input type="checkbox" id="disponibilidad" checked>Disponible para la venta<br><br>
-        <!-- Botón para enviar el formulario y llamar a la función que envía el objeto -->
-        <button type="submit">Enviar</button>
-    </form>
+    <!-- Estructura del carro, se guarda en LocalStorage ahora.-->
+<header id="header" class="header">
+    <div class="container">
+        <div class="row">
+            <div class="four columns">
+                <img src="img/logo.jpg" id="logo">
+            </div>
+            <div class="two columns u-pull-right">
+                <ul>
 
-    //Lugar donde voy mostrando el contenido del Array de objetos que se va armando "productos "
-    <h3>Array de objetos que se va armando: </h3>
-    <div id="productosDiv"></div>
-    <hr>
+                        <img src="img/cart2.png" id="img-carrito2">
+                            <!--- Datos del carro-->
+                        <div id="carrito">
+                                <!-- Contenido del carrito -->    
 
-    <h3>Lo que recibo desde el Backend: </h3>
-        <!-- Espacio que dejo para que cargue en HTML la vuelta de los datos:-->  
-        <p id="resultadoHTML"> -------Espacio que se va a remplazar por la respuesta del back ------- </p>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                    <tbody></tbody>
+                            </table>
+                                    <!--- Boton que acciona Vaciar lista-carrito en JS -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div>
+</header>
+    <!--Barra que separa la parte fija del carro de arriba-->
+    <div class="barra">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
+    <br><br>
 
-    <!-- Boton con evento que envía el array de objetos al backend -->
-    <button id="enviarProductos">Enviar Array Hacia el BackeEnd</button>
 
-    <script src="script.js"></script>
+    <h1>Cargar nuevo producto</h1>
+
+    <div class="productoForm">
+        <h2>Agregar Producto</h2>
+        <form id="productoForm">
+            <!-- Tus campos de entrada aquí -->
+            <input type="text" id="nombre" placeholder="Nombre del producto"><br>
+            <input type="number" id="precio" placeholder="Valor unitario del producto"><br>
+            <input type="number" id="stock" placeholder="Cantidad en stock"><br>
+            <input type="text" id="urlImagenProducto" placeholder="URL imagen producto"><br>
+            <input type="checkbox" id="disponibilidad" checked>Disponible para la venta<br><br>
+            <!-- Botón para enviar el formulario y llamar a la función que envía el objeto -->
+            <button type="submit">Guardar</button>
+        </form>
+   </div>
+
+
+    <script src="js/app.js"></script>
  
 </body>
 </html>

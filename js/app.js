@@ -106,7 +106,7 @@ function sincronizarStorage() {
      localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
 }
 
-// Elimino los productos del carrito en el DOM
+// Elimino los productos del carrito
 function vaciarCarrito() {
      while(contenedorCarrito.firstChild) {
           contenedorCarrito.removeChild(contenedorCarrito.firstChild);
@@ -115,7 +115,7 @@ function vaciarCarrito() {
 
 document.addEventListener('DOMContentLoaded', cargarProductos);
 
-// Función para renderizar los productos en el DOM
+// Función para renderizar los productos
 function renderizarProductos(productos) {
      const listaProductos = document.getElementById('lista-productos');
      let html = '';
@@ -170,5 +170,28 @@ function renderizarProductos(productos) {
          });
  }
 
- 
- 
+
+
+
+  //Evento que se dispara EL BOTON al enviar el formulario
+  document.getElementById('Guardar').onsubmit = (event) => {
+     event.preventDefault(); // Evita que la página se recargue
+     // Crea el objeto Producto con los datos del formulario
+     let Producto = {
+         nombre: document.getElementById('nombre').value,
+         precio: document.getElementById('precio').value,
+         stock: document.getElementById('stock').value,
+         urlImagenProducto: document.getElementById('urlImagenProducto').value,
+         disponibilidad: document.getElementById('disponibilidad').checked
+     };
+     // Llama a la función cargarProductoN con el objeto Producto, asi lo cargar en el array
+     cargarProducto(Producto);
+ };
+
+  //Boton con evento que envía el array de objetos al backend
+  document.getElementById('enviarProductos').onclick = () => {
+     // Envío el array de objetos al backend
+     enviarObjetoEnJSON(productos);
+     }
+
+

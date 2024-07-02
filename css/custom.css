@@ -179,7 +179,6 @@ ul {
     font-size: 22px;
 }
 
-
 .footer {
     margin-top: 40px;
     border-top:1px solid #aaa;;
@@ -191,3 +190,11 @@ margin-bottom: 10px;
 text-decoration: none;
 }
 
+.productoForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px 0;
+}
