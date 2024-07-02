@@ -106,7 +106,7 @@ function sincronizarStorage() {
      localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
 }
 
-// Elimina los Productos del carrito en el DOM
+// Elimino los productos del carrito en el DOM
 function vaciarCarrito() {
      while(contenedorCarrito.firstChild) {
           contenedorCarrito.removeChild(contenedorCarrito.firstChild);
@@ -115,35 +115,69 @@ function vaciarCarrito() {
 
 document.addEventListener('DOMContentLoaded', cargarProductos);
 
-function cargarProductos() {
-  fetch('data/productos.json')
-    .then(response => response.json())
-    .then(productos => {
-      const listaProductos = document.getElementById('lista-productos');
-      let html = '';
-      productos.forEach(producto => {
-        html += `
-          <div class="row">
-               <div class="four columns">
-                    <div class="card">
-                         <!-- Acá cambio la ruta de la imagen para usar el id del producto -->
-                         <img src="img/${producto.id}.jpg" class="imagen-producto u-full-width">
-                         <div class="info-card">
-                         <h4>${producto.nombre}</h4>
-                         <p>cod: ${producto.id}</p>
-                         
-                         <!-- Acá tengo la info del texto inf de las cajas -->
-                         <p class="cajaInf">stock:${producto.stock}  
-                              <textoDerecha class="u-pull-right ">$${producto.precio}</textoDerecha></p>
+// Función para renderizar los productos en el DOM
+function renderizarProductos(productos) {
+     const listaProductos = document.getElementById('lista-productos');
+     let html = '';
+     productos.forEach(producto => {
+       html += `
+         <div class="row">
+              <div class="four columns">
+                   <div class="card">
+                        <img src="img/${producto.id}.jpg" class="imagen-producto u-full-width">
+                        <div class="info-card">
+                        <h4>${producto.nombre}</h4>
+                        <p>cod: ${producto.id}</p>
+                        <p class="cajaInf">stock:${producto.stock}  
+                             <textoDerecha class="u-pull-right ">$${producto.precio}</textoDerecha></p>
+                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${producto.id}">Agregar Al Carrito</a>
+                   </div>
+              </div>
+         </div> 
+       `;
+     });
+     listaProductos.innerHTML = html;
+   }
+   
+   // Modificación de cargarProductos para que use la nueva función de renderización
+   //function cargarProductos() {
+   //  fetch('data/productos.json')
+   //    .then(response => response.json())
+   //    .then(productos => {
+   //      // Llamo a la función de renderización pasando los productos obtenidos
+   //      renderizarProductos(productos);
+   //    })
+   //    .catch(error => console.error('Error al cargar los productos:', error));
+   //}
 
-                         <!-- Acá llama a la funcion agregar-carrito y envia como parametro variable data-id con el contenido de producto-id -->
-                         <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${producto.id}">Agregar Al Carrito</a>
-                    </div>
-               </div>
-          </div> 
-        `;
-      });
-      listaProductos.innerHTML = html;
-    })
-    .catch(error => console.error('Error al cargar los productos:', error));
-}
+
+   function cargarProductos() {
+     // URL del backend que devuelve los datos de los productos
+     fetch('http://127.0.0.1:3000/productos')
+         .then(response => {
+             // Verifica si la solicitud fue exitosa
+             if (!response.ok) {
+                 throw new Error('Error al cargar los productos');
+             }
+             return response.json(); // Convierte la respuesta en JSON
+         })
+         .then(datos => {
+             // Acá mando a renderizar lo trajo del backend
+             renderizarProductos(datos);
+         })
+         .catch(error => {
+             console.error('Error al cargar los productos:', error);
+         });
+ }
+
+ // Voy a agregregar una funcion que sume el carrito:
+    // Calcular y mostrar el total del carrito
+     function calcularTotalCarrito() {
+          let total = 0;
+          articulosCarrito.forEach(producto => {
+               const precio = parseFloat(producto.precio.replace('$', '')); // Asumiendo que el precio viene con un símbolo de dólar
+               total += precio * producto.stock;
+          });
+     return total;
+ }
+ 
