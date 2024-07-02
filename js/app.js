@@ -170,14 +170,5 @@ function renderizarProductos(productos) {
          });
  }
 
- // Voy a agregregar una funcion que sume el carrito:
-    // Calcular y mostrar el total del carrito
-     function calcularTotalCarrito() {
-          let total = 0;
-          articulosCarrito.forEach(producto => {
-               const precio = parseFloat(producto.precio.replace('$', '')); // Asumiendo que el precio viene con un símbolo de dólar
-               total += precio * producto.stock;
-          });
-     return total;
- }
+ 
  
