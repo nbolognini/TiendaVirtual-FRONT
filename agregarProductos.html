@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrito</title>
+    <title>Cargar Productos</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/custom.css">
@@ -20,12 +20,10 @@
             </div>
             <div class="two columns u-pull-right">
                 <ul>
-
                         <img src="img/cart2.png" id="img-carrito2">
                             <!--- Datos del carro-->
                         <div id="carrito">
                                 <!-- Contenido del carrito -->    
-
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -51,25 +49,154 @@
     <br><br><br><br>
     <br><br>
 
-
-    <h1>Cargar nuevo producto</h1>
+    <h1>Cargar Productos</h1>
 
     <div class="productoForm">
-        <h2>Agregar Producto</h2>
         <form id="productoForm">
+            <h4>Nuevo Producto:</h4>
             <!-- Tus campos de entrada aquí -->
-            <input type="text" id="nombre" placeholder="Nombre del producto"><br>
-            <input type="number" id="precio" placeholder="Valor unitario del producto"><br>
-            <input type="number" id="stock" placeholder="Cantidad en stock"><br>
-            <input type="text" id="urlImagenProducto" placeholder="URL imagen producto"><br>
-            <input type="checkbox" id="disponibilidad" checked>Disponible para la venta<br><br>
+            <select id="tipoProducto">
+              </select><br>
+              <input type="number" id="precio" placeholder="Valor unitario del producto" step="0.01"><br>
+                <input type="number" id="stock" placeholder="Cantidad en stock"><br>
             <!-- Botón para enviar el formulario y llamar a la función que envía el objeto -->
-            <button type="submit">Guardar</button>
+            <button id="agregarProductoAlLocalStorage">Agregar producto</button>
+            <button id="limpiarLocalStorage">Limpiar todo</button>
         </form>
+        <button id="limpiarLocalStorage">Guardar en Base de Datos</button>      
    </div>
 
 
+   <p id="resultadoHTML"> -------Espacio que se va a remplazar por lo tengo en el localStorage------- </p>
+   
+   <p id="renderizarProductos" class="container"></p>
+   
     <script src="js/app.js"></script>
- 
+
+    
+    <script>
+        // Cargar los productos en el select
+const select = document.querySelector('#tipoProducto');
+const tipoProductos = [
+    "Remera", "Pantalon", "Zapatillas", "Campera", "Buzo", "Short", "Medias", "Gorra", "Mochila", "Bermuda"
+];
+
+tipoProductos.forEach(tipoProducto => {
+    const option = document.createElement('option');
+    option.value = tipoProducto; // Corregido para usar tipoProducto
+    option.textContent = tipoProducto; // Corregido para usar tipoProducto
+    select.appendChild(option);
+});
+
+
+
+document.addEventListener('DOMContentLoaded', cargarEventListeners);
+
+function cargarEventListeners() {
+    document.querySelector('#productoForm').addEventListener('submit', agregarProductoAlLocalStorage);
+    document.querySelector('#limpiarLocalStorage').addEventListener('click', limpiarLocalStorage);
+}
+
+function agregarProductoAlLocalStorage(e) {
+    e.preventDefault();
+    const tipoProducto = document.querySelector('#tipoProducto').value;
+    const precio = document.querySelector('#precio').value;
+    const stock = document.querySelector('#stock').value;
+
+    // Verificar si el campo 'precio' o 'stock' están vacíos
+    if (precio.trim() === '' || stock.trim() === '') {
+        console.log('El valor unitario y la cantidad no pueden estar vacíos');
+        return; // Detener la ejecución de la función
+    }
+
+    const producto = { tipoProducto, precio, stock };
+    let productos = obtenerProductosLocalStorage();
+    productos.push(producto);
+    localStorage.setItem('productos', JSON.stringify(productos));
+    alert('Producto agregado');
+    document.querySelector('#productoForm').reset();
+    location.reload(); // Recarga la página para mostrar el nuevo producto en la lista
+}
+
+function obtenerProductosLocalStorage() {
+    let productos;
+    if(localStorage.getItem('productos') === null) {
+        productos = [];
+    } else {
+        productos = JSON.parse(localStorage.getItem('productos'));
+    }
+    return productos;
+}
+
+function limpiarLocalStorage() {
+    // Limpio el formulario
+    document.querySelector('#productoForm').reset();
+    // Limpio específicamente el item 'productos' del localStorage
+    localStorage.removeItem('productos');
+    //Inicializo localStorage vacio
+    alert('LocalStorage limpiado');
+    location.reload();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const resultadoHTML = document.getElementById('resultadoHTML');
+    const productos = JSON.parse(localStorage.getItem('productos'));
+
+    if (productos) {
+        let contenido = '<ul>';
+        productos.forEach(producto => {
+            contenido += `<li>Tipo: ${producto.tipoProducto}, Precio: ${producto.precio}, Stock: ${producto.stock}</li>`;
+        });
+        contenido += '</ul>';
+        resultadoHTML.innerHTML = contenido;
+    } else {
+        resultadoHTML.innerHTML = 'No hay productos pre-cargados.';
+    }
+});
+
+
+function renderizarProductos(productos) {
+    const elementoRenderizarProductos = document.getElementById('renderizarProductos');
+    let html = '';
+    productos.forEach(producto => {
+        html += `
+            <div class="row">
+                <div class="four columns">
+                    <div class="card">
+                        <img src="img/${producto.tipoProducto}.jpg" class="imagen-producto u-full-width">
+                        <div class="info-card">
+                            <h4>Producto: ${producto.tipoProducto}</h4>
+                            <p>  </p>
+                            <p class="cajaInf">stock:${producto.stock}  
+                                <textoDerecha class="u-pull-right ">$${producto.precio}</textoDerecha></p>
+                            <a href="#" class="u-full-width button-primary button input agregar-carrito" onclick="eliminarProducto(${producto.id})">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        `;
+    });
+    elementoRenderizarProductos.innerHTML = html;
+}
+
+// Función para recuperar productos de localStorage y mostrarlos
+function mostrarProductosDesdeLocalStorage() {
+    const productos = JSON.parse(localStorage.getItem('productos')) || [];
+    renderizarProductos(productos);
+}
+
+// Llamar a mostrarProductosDesdeLocalStorage cuando la página se carga
+document.addEventListener('DOMContentLoaded', mostrarProductosDesdeLocalStorage);
+
+function eliminarProducto(idProducto) {
+    // Lógica para eliminar el producto del almacenamiento o la lista
+    console.log("Producto a eliminar:", idProducto);
+    // Aquí iría el código para eliminar el producto del localStorage o de la estructura de datos que estés utilizando
+}   
+
+
+
+    </script>
+
 </body>
 </html>
