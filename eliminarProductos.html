@@ -11,7 +11,7 @@
 </head>
 <body>
     
-<!-- Estructura del carro, se guarda en LocalStorage ahora.-->
+
 <header id="header" class="header">
     <div class="container">
         <div class="row">
@@ -93,18 +93,14 @@ function eliminarProducto(id) {
     .then(response => {
         if (response.ok) {
             console.log('Producto eliminado con éxito');
-            // Aquí puedes, por ejemplo, quitar el producto de la vista o recargar la lista de productos
         } else if (response.status === 404) {
             console.error('Producto no encontrado');
-            // Manejar el caso en que el producto no se encuentra
         } else {
             console.error('Error al eliminar el producto');
-            // Manejar otros posibles errores
         }
     })
     .catch(error => {
         console.error('Error en la petición:', error);
-        // Manejar errores de la petición fetch
     });
 }
 

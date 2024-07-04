@@ -1,6 +1,6 @@
 const select = document.querySelector('#nombre');
 const nombres = [// nombres de productos
-    "Remera", "Pantalon", "Zapatillas", "Campera", "Buzo", "Short", "Medias", "Gorra", "Mochila", "Bermuda", "Zapatos", "Bufanda", "Guantes", "Pantuflas", "Pijama",
+    "Remera", "Pantalon", "Zapatillas", "Campera", "Buzo", "Short", "Bermuda", "Zapatos","Gorra", "Medias", "Mochila", "Bufanda", "Guantes", "Pantuflas", "Pijama",
      "Bikini", "Vestido", "Pollera", "Camisa", "Corbata", "Saco", "Chaleco", "Pulsera", "Collar", "Anillo", "Aros", "Reloj", "Gafas", "Cinturon", "Billetera",
       "Botas", "Sandalias"
 ];
