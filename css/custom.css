@@ -156,12 +156,23 @@ ul {
     transition: transform 0.2s; /* Transición suave para hover */
   }
 
+  .card2 {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Asegura que todo dentro de .card se ajuste a los bordes redondeados */
+    transition: transform 0.2s; /* Transición suave para hover */
+  }
+
 @media (min-width: 550px) {
     .card {
         text-align: left;
     }
 }
 .info-card  {
+    padding: 10px 20px;
+}
+
+.info-card2  {
     padding: 10px 20px;
 }
 
@@ -173,7 +184,13 @@ ul {
     /* text-decoration: line-through; */
     font-size: 18px;
     margin-top: 10px;
+
 }
+.info-card .cajaInf textoIzquierda {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
 .info-card .cajaInf textoDerecha {
     font-weight: 700;
     font-size: 22px;
@@ -197,4 +214,32 @@ text-decoration: none;
     flex-direction: column;
     width: 100%;
     margin: 20px 0;
+}
+
+
+
+.containerAgregarProductos {
+    display: flex;
+    justify-content: flex-start; /* O puedes usar 'center' para centrar los elementos en la última fila si no está completa */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio uniforme entre elementos */
+}
+
+.containerAgregarProductos > * {
+    width: calc(25% - 20px); /* Ajusta el ancho para 4 elementos por fila, considerando el gap */
+    height: 500px; /* Altura fija, ajusta según necesidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.contenedorBase {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* Si se desea mantener los elementos apilados verticalmente */
+    align-items: center; /* Centra horizontalmente los elementos hijos si flex-direction es column */
+    max-width: 1000px; /* Establece un ancho máximo de 1000px */
+    margin: 0 auto; /* Centra el contenedor en la página */
 }

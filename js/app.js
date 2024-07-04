@@ -124,7 +124,7 @@ function renderizarProductos(productos) {
          <div class="row">
               <div class="four columns">
                    <div class="card">
-                        <img src="img/${producto.id}.jpg" class="imagen-producto u-full-width">
+                        <img src="img/${producto.nombre}.jpg" class="imagen-producto u-full-width">
                         <div class="info-card">
                         <h4>${producto.nombre}</h4>
                         <p>cod: ${producto.id}</p>

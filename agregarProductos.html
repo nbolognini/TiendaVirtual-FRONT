@@ -11,6 +11,7 @@
 </head>
 <body>
 
+
     <!-- Estructura del carro, se guarda en LocalStorage ahora.-->
 <header id="header" class="header">
     <div class="container">
@@ -53,9 +54,9 @@
 
     <div class="productoForm">
         <form id="productoForm">
-            <h4>Nuevo Producto:</h4>
+            <h5>Nuevo Producto:</h5>
             <!-- Tus campos de entrada aquí -->
-            <select id="tipoProducto">
+            <select id="nombre">
               </select><br>
               <input type="number" id="precio" placeholder="Valor unitario del producto" step="0.01"><br>
                 <input type="number" id="stock" placeholder="Cantidad en stock"><br>
@@ -63,28 +64,34 @@
             <button id="agregarProductoAlLocalStorage" class='class="u-full-width button-primary4 button input agregar-carrito'">Agregar producto</button>
             <button id="limpiarLocalStorage" class='class="u-full-width button-primary2 button input agregar-carrito'>Borrar pre-carga</button>
         </form>
-        <button id="limpiarLocalStorage" class='class="u-full-width button-primary3 button input agregar-carrito'>Guardar en Base de Datos</button>      
-   </div>
+             
+   
+        <button id="guardarEnBD" class='class="u-full-width button-primary3 button input agregar-carrito'>Guardar en Base de Datos</button>
+    </div>
+
+    <br><br>
+
+    <div class="contenedorBase">
+        <div id="renderizarProductos" class="containerAgregarProductos"></div>
+    </div>
+        
+        
 
 
-   <p id="resultadoHTML"> -------Espacio que se va a remplazar por lo tengo en el localStorage------- </p>
-   
-   <p id="renderizarProductos" class="container"></p>
-   
-    <script src="js/app.js"></script>
+
 
     
     <script>
         // Cargar los productos en el select
-const select = document.querySelector('#tipoProducto');
-const tipoProductos = [
+const select = document.querySelector('#nombre');
+const nombres = [
     "Remera", "Pantalon", "Zapatillas", "Campera", "Buzo", "Short", "Medias", "Gorra", "Mochila", "Bermuda"
 ];
 
-tipoProductos.forEach(tipoProducto => {
+nombres.forEach(nombre => {
     const option = document.createElement('option');
-    option.value = tipoProducto; // Corregido para usar tipoProducto
-    option.textContent = tipoProducto; // Corregido para usar tipoProducto
+    option.value = nombre; // Corregido para usar nombre
+    option.textContent = nombre; // Corregido para usar nombre
     select.appendChild(option);
 });
 
@@ -99,7 +106,7 @@ function cargarEventListeners() {
 
 function agregarProductoAlLocalStorage(e) {
     e.preventDefault();
-    const tipoProducto = document.querySelector('#tipoProducto').value;
+    const nombre = document.querySelector('#nombre').value;
     const precio = document.querySelector('#precio').value;
     const stock = document.querySelector('#stock').value;
 
@@ -109,7 +116,7 @@ function agregarProductoAlLocalStorage(e) {
         return; // Detener la ejecución de la función
     }
 
-    const producto = { tipoProducto, precio, stock };
+    const producto = { nombre, precio, stock };
     let productos = obtenerProductosLocalStorage();
     productos.push(producto);
     localStorage.setItem('productos', JSON.stringify(productos));
@@ -134,8 +141,8 @@ function limpiarLocalStorage() {
     // Limpio específicamente el item 'productos' del localStorage
     localStorage.removeItem('productos');
     //Inicializo localStorage vacio
-    alert('LocalStorage limpiado');
     location.reload();
+    consonle.log('LocalStorage limpiado');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -145,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (productos) {
         let contenido = '<ul>';
         productos.forEach(producto => {
-            contenido += `<li>Tipo: ${producto.tipoProducto}, Precio: ${producto.precio}, Stock: ${producto.stock}</li>`;
+            contenido += `<li>Tipo: ${producto.nombre}, Precio: ${producto.precio}, Stock: ${producto.stock}</li>`;
         });
         contenido += '</ul>';
         resultadoHTML.innerHTML = contenido;
@@ -154,26 +161,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 function renderizarProductos(productos) {
     const elementoRenderizarProductos = document.getElementById('renderizarProductos');
     let html = '';
     productos.forEach(producto => {
         html += `
             <div class="row">
-                <div class="four columns">
-                    <div class="card">
-                        <img src="img/${producto.tipoProducto}.jpg" class="imagen-producto u-full-width">
+                <div class="nine columns">
+                    <div class="card2">
+                        <img src="img/${producto.nombre}.jpg" class="imagen-producto u-full-width">
                         <div class="info-card">
-                            <h4>Producto: ${producto.tipoProducto}</h4>
-                            <p>  </p>
-                            <p class="cajaInf">stock:${producto.stock}  
-                                <textoDerecha class="u-pull-right ">$${producto.precio}</textoDerecha></p>
+                            <h4>${producto.nombre}</h4>
+                            <p>stock: ${producto.stock}</p>
+                            <p></p>
+                                <h4><textoDerecha class="center">Valor: $${producto.precio}</textoDerecha></p>
                             <a href="#" class="u-full-width button-primary2 button input agregar-carrito" onclick="eliminarProducto(${producto.id})">Borrar</a>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
+             
         `;
     });
     elementoRenderizarProductos.innerHTML = html;
@@ -197,6 +204,40 @@ document.addEventListener('DOMContentLoaded', mostrarProductosDesdeLocalStorage)
 //}   
 
 
+document.getElementById('guardarEnBD').addEventListener('click', function() {
+    // Recuperar el array de productos de localStorage
+    const productos = JSON.parse(localStorage.getItem('productos'));
+
+    if (!productos) {
+        alert('No hay productos para guardar.');
+        return;
+    }
+
+    // Enviar los productos al backend
+    fetch('http://127.0.0.1:3000/guardarProductos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productos }), // Back va recibir un  objeto con una propiedad productos que es un array
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Error en la solicitud: ' + response.statusText);
+    })
+    .then(data => {
+        console.log(data); // Procesar la respuesta del servidor
+        alert('Productos guardados con éxito');
+        limpiarLocalStorage();
+    })
+    .catch(error => {
+        console.error('Error al guardar los productos:', error);
+        alert('Productos guardados con éxito');
+        limpiarLocalStorage();
+    });
+});
 
     </script>
 
