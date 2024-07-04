@@ -208,6 +208,25 @@ input[type="button"].button-primary {
   color: #FFF;
   background-color: #3633f0;
   border-color: #335ff0; }
+
+  .button.button-primary2,
+  input[type="button"].button-primary2 {
+      color: #F8F8F8; 
+      background-color: #FF9999; 
+      border-color: #FF9999; }
+  
+  .button.button-primary3,
+  input[type="button"].button-primary3 { 
+      color: #F8F8F8; 
+      background-color: #7BC986; 
+      border-color: #7BC986; }
+  
+  .button.button-primary4,
+  input[type="button"].button-primary4 { 
+      color: #F8F8F8; 
+      background-color: #8A7BC8; 
+      border-color: #8A7BC8; }
+
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,

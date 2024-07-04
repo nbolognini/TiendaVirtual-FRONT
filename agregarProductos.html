@@ -60,10 +60,10 @@
               <input type="number" id="precio" placeholder="Valor unitario del producto" step="0.01"><br>
                 <input type="number" id="stock" placeholder="Cantidad en stock"><br>
             <!-- Botón para enviar el formulario y llamar a la función que envía el objeto -->
-            <button id="agregarProductoAlLocalStorage">Agregar producto</button>
-            <button id="limpiarLocalStorage">Limpiar todo</button>
+            <button id="agregarProductoAlLocalStorage" class='class="u-full-width button-primary4 button input agregar-carrito'">Agregar producto</button>
+            <button id="limpiarLocalStorage" class='class="u-full-width button-primary2 button input agregar-carrito'>Borrar pre-carga</button>
         </form>
-        <button id="limpiarLocalStorage">Guardar en Base de Datos</button>      
+        <button id="limpiarLocalStorage" class='class="u-full-width button-primary3 button input agregar-carrito'>Guardar en Base de Datos</button>      
    </div>
 
 
@@ -169,7 +169,7 @@ function renderizarProductos(productos) {
                             <p>  </p>
                             <p class="cajaInf">stock:${producto.stock}  
                                 <textoDerecha class="u-pull-right ">$${producto.precio}</textoDerecha></p>
-                            <a href="#" class="u-full-width button-primary button input agregar-carrito" onclick="eliminarProducto(${producto.id})">Borrar</a>
+                            <a href="#" class="u-full-width button-primary2 button input agregar-carrito" onclick="eliminarProducto(${producto.id})">Borrar</a>
                         </div>
                     </div>
                 </div>
@@ -188,11 +188,13 @@ function mostrarProductosDesdeLocalStorage() {
 // Llamar a mostrarProductosDesdeLocalStorage cuando la página se carga
 document.addEventListener('DOMContentLoaded', mostrarProductosDesdeLocalStorage);
 
-function eliminarProducto(idProducto) {
-    // Lógica para eliminar el producto del almacenamiento o la lista
-    console.log("Producto a eliminar:", idProducto);
-    // Aquí iría el código para eliminar el producto del localStorage o de la estructura de datos que estés utilizando
-}   
+
+//FALTA TERMINAR: Función para eliminar un producto del localStorage
+//function eliminarProducto(idProducto) {
+//    // Lógica para eliminar el producto del almacenamiento o la lista
+//    console.log("Producto a eliminar:", idProducto);
+//    // Aquí iría el código para eliminar el producto del localStorage o de la estructura de datos que estés utilizando
+//}   
 
 
 
