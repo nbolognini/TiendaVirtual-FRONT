@@ -9,7 +9,7 @@ let articulosCarrito = [];
 // por ejemplo agregar-carrito, que ejecuta la funcion agregarProducto()
 const agregarProducto = (e) => {
      e.preventDefault();
-     // acá valido si el click fue en el boton agregar-carrito
+     // si se hace clic en agregar-carrito
      if(e.target.classList.contains('agregar-carrito')) {
           // acá selecciono el producto que voy a agregar al carrito
           const producto = e.target.parentElement.parentElement;
@@ -22,15 +22,14 @@ const agregarProducto = (e) => {
 cargarEventListeners();
 
 function cargarEventListeners() {
-     // Dispara cuando se presiona "Agregar Carrito"
+     // se activa con "Agregar Carrito"
      listaProductos.addEventListener('click', agregarProducto);
-     // Cuando se elimina un producto del carrito
+     // se activa con "Eliminar Producto"
      carrito.addEventListener('click', eliminarProducto);
-
-     // Al cargar el documento, mostrar LocalStorage
+     // Al cargar el carrito,  traerlo desde el LocalStorage
      document.addEventListener('DOMContentLoaded', () => {
           articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
-     // imprimir el carrito en el DOM
+     // imprimir el carrito
           carritoHTML();
      });
 

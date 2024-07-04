@@ -243,3 +243,23 @@ text-decoration: none;
     max-width: 1000px; /* Establece un ancho máximo de 1000px */
     margin: 0 auto; /* Centra el contenedor en la página */
 }
+
+.botonera {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Esto añade espacio entre los elementos */
+    padding: 10px;
+}
+
+.boton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.boton:hover {
+    background-color: #0056b3;
+}
